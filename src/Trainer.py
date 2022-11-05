@@ -95,12 +95,12 @@ class TwoModalBertTrainer:
 
     def train_model(
         self,
-        text_size,
-        context_size,
         train_data_loader,
         train,
         val_data_loader,
         val,
+        text_size,
+        context_size,
         model_save_path,
     ):
         history = defaultdict(list)
@@ -140,8 +140,7 @@ class TwoModalBertTrainer:
 
             if val_acc > best_accuracy:
                 torch.save(
-                    model.state_dict(),
-                    model_save_path,
+                    model.state_dict(), model_save_path,
                 )
                 best_accuracy = val_acc
 

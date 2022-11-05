@@ -1,4 +1,4 @@
-from Dataset import TwoModalDataset
+from src.Dataset import TwoModalDataset
 from torch.utils.data import DataLoader
 from sklearn.model_selection import train_test_split
 
