@@ -6,17 +6,13 @@ from sklearn.model_selection import train_test_split
 class TwoModalDataPreparation:
     def __init__(
         self,
-        max_seq_len,
-        batch_size,
-        num_workers=2,
-        random_seed=42,
-        pretrained_model_name_or_path="bert-base-uncased",
+        config,
     ):
-        self.max_seq_len = max_seq_len
-        self.batch_size = batch_size
-        self.num_workers = num_workers
-        self.random_seed = random_seed
-        self.pretrained_model_name_or_path = pretrained_model_name_or_path
+        self.max_seq_len = int(config['GENERAL']['MAX_SEQ_LEN'])
+        self.batch_size = int(config['GENERAL']['BATCH_SIZE'])
+        self.num_workers = int(config['GENERAL']['NUM_WORKERS'])
+        self.random_seed = int(config['GENERAL']['RANDOM_SEED'])
+        self.pretrained_model_name_or_path = config['GENERAL']['PRETRAINED_MODEL_NAME_OR_PATH']
 
     def _create_data_loader(self, df, text_column, context_column, label_column):
 

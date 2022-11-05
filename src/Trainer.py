@@ -7,11 +7,11 @@ import torch
 
 
 class TwoModalBertTrainer:
-    def __init__(self, device, model_save_path, pretrained_model_name_or_path, epochs=3):
+    def __init__(self, device, config):
         self.device = device
-        self.epochs = epochs
-        self.model_save_path = model_save_path,
-        self.pretrained_model_name_or_path = pretrained_model_name_or_path
+        self.epochs = int(config['GENERAL']['EPOCHS'])
+        self.model_save_path = config['GENERAL']['MODEL_SAVE_PATH'],
+        self.pretrained_model_name_or_path = config['GENERAL']['PRETRAINED_MODEL_NAME_OR_PATH']
 
     def _send_to_device(self, d):
         text_input_ids = d["text_input_ids"].to(self.device)

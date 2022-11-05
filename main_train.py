@@ -6,16 +6,7 @@ import os
 import pandas as pd
 import torch
 
-# define constants
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-EPOCHS = 3
-RANDOM_SEED = 42
-BATCH_SIZE = 16
-MAX_SEQ_LEN = 200
-NUM_WORKERS = 2
-PRETRAINED_MODEL_NAME_AND_PATH = "bert-base-uncased"
-MODEL_SAVE_PATH = "/content/drive/MyDrive/TheOffice/best_model_state.bin"
+from configparser import ConfigParser
 
 
 # load data
@@ -41,18 +32,16 @@ df = df[df["speaker"].isin(SELECTED_SPEAKERS)]
 le = preprocessing.LabelEncoder()
 df["label"] = le.fit_transform(df["speaker"])
 
+#Read config.ini file
+config = ConfigParser()
+config.read("config.ini")
+
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # intialize modules
-DataPreparation = TwoModalDataPreparation(
-    max_seq_len=MAX_SEQ_LEN,
-    batch_size=BATCH_SIZE,
-    num_workers=NUM_WORKERS,
-    random_seed=RANDOM_SEED,
-    pretrained_model_name_or_path=PRETRAINED_MODEL_NAME_AND_PATH,
-)
-
-
-Trainer = TwoModalBertTrainer(device=DEVICE, epochs=EPOCHS, model_save_path=MODEL_SAVE_PATH, pretrained_model_name_or_path=PRETRAINED_MODEL_NAME_AND_PATH)
+DataPreparation = TwoModalDataPreparation(config=config)
+Trainer = TwoModalBertTrainer(device=DEVICE, config=config)
 
 # create data loaders
 (
