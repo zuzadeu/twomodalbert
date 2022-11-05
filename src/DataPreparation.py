@@ -18,12 +18,12 @@ class TwoModalDataPreparation:
         self.random_seed = random_seed
         self.pretrained_model_name_or_path = pretrained_model_name_or_path
 
-    def _create_data_loader(self, df, line_column, context_column, label_column):
+    def _create_data_loader(self, df, text_column, context_column, label_column):
 
         ds = TwoModalDataset(
-            lines=df[line_column].to_numpy(),
+            texts=df[text_column].to_numpy(),
             contexts=df[context_column].to_numpy(),
-            speakers=df[label_column].to_numpy(),
+            labels=df[label_column].to_numpy(),
             max_seq_len=self.max_seq_len,
             pretrained_model_name_or_path=self.pretrained_model_name_or_path,
         )
@@ -31,7 +31,7 @@ class TwoModalDataPreparation:
         return DataLoader(ds, batch_size=self.batch_size, num_workers=self.num_workers)
 
     def prepare_data(
-        self, df, line_column, context_column, label_column, train_size, val_size
+        self, df, text_column, context_column, label_column, train_size, val_size
     ):
         train, test = train_test_split(
             df,
@@ -47,12 +47,12 @@ class TwoModalDataPreparation:
         )
 
         train_data_loader = self._create_data_loader(
-            train, line_column, context_column, label_column
+            train, text_column, context_column, label_column
         )
         val_data_loader = self._create_data_loader(
-            val, line_column, context_column, label_column
+            val, text_column, context_column, label_column
         )
         test_data_loader = self._create_data_loader(
-            test, line_column, context_column, label_column
+            test, text_column, context_column, label_column
         )
         return train_data_loader, train, val_data_loader, val, test_data_loader, test

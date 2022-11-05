@@ -1,15 +1,17 @@
 from collections import defaultdict
 from torch import nn
 from transformers import AdamW
-from Model import TwoModalBERTModel
+from src.Model import TwoModalBERTModel
 import numpy as np
 import torch
 
 
 class TwoModalBertTrainer:
-    def __init__(self, device, epochs=3):
+    def __init__(self, device, model_save_path, pretrained_model_name_or_path, epochs=3):
         self.device = device
         self.epochs = epochs
+        self.model_save_path = model_save_path,
+        self.pretrained_model_name_or_path = pretrained_model_name_or_path
 
     def _send_to_device(self, d):
         text_input_ids = d["text_input_ids"].to(self.device)
@@ -101,11 +103,22 @@ class TwoModalBertTrainer:
         val,
         text_size,
         context_size,
-        model_save_path,
+        binary=False,
+        text_p=0.3,
+        context_p=0.3,
+        output_p=0.3,
     ):
         history = defaultdict(list)
         print(f"LINE SIZE = {text_size}, CONTEXT SIZE = {context_size}")
-        model = TwoModalBERTModel(line_hs_size=text_size, context_hs_size=context_size)
+        model = TwoModalBERTModel(
+            text_hs_size=text_size,
+            context_hs_size=context_size,
+            binary=binary,
+            text_p=text_p,
+            context_p=context_p,
+            output_p=output_p,
+            pretrained_model_name_or_path=self.pretrained_model_name_or_path,
+        )
         model = model.to(self.device)
 
         optimizer = AdamW(model.parameters(), lr=2e-5, correct_bias=False)
@@ -140,7 +153,7 @@ class TwoModalBertTrainer:
 
             if val_acc > best_accuracy:
                 torch.save(
-                    model.state_dict(), model_save_path,
+                    model.state_dict(), self.model_save_path,
                 )
                 best_accuracy = val_acc
 
