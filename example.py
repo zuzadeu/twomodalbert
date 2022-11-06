@@ -7,7 +7,7 @@ import pandas as pd
 import torch
 
 from configparser import ConfigParser
-
+from src.Inference import predict_on_text, test_model
 
 # load data
 src_df_path = "/content/drive/MyDrive/TheOffice/The-Office-Lines-V4.csv"
@@ -32,16 +32,20 @@ df = df[df["speaker"].isin(SELECTED_SPEAKERS)]
 le = preprocessing.LabelEncoder()
 df["label"] = le.fit_transform(df["speaker"])
 
-#Read config.ini file
+
+# Read config.ini file
 config = ConfigParser()
 config.read("config.ini")
+
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+
 # intialize modules
 DataPreparation = TwoModalDataPreparation(config=config)
 Trainer = TwoModalBertTrainer(device=DEVICE, config=config)
+
 
 # create data loaders
 (
@@ -60,6 +64,7 @@ Trainer = TwoModalBertTrainer(device=DEVICE, config=config)
     val_size=0.1,
 )
 
+
 # train model
 model = Trainer.train_model(
     train_data_loader,
@@ -73,3 +78,48 @@ model = Trainer.train_model(
     context_p=0.3,
     output_p=0.3,
 )
+
+
+# load model
+model = TwoModalBERTModel(
+    text_size=200,
+    context_size=200,
+    binary=False,
+    text_p=0.3,
+    context_p=0.3,
+    output_p=0.3,
+)
+model.load_state_dict(torch.load(config["GENERAL"]["MODEL_SAVE_PATH"]))
+
+
+# evaluate on a test set
+y_pred, y_test = test_model(model, test_data_loader)
+y_pred, y_test = [e.cpu() for e in y_pred], [e.cpu() for e in y_test]
+
+
+# print confusion matrix - helper function
+def show_confusion_matrix(confusion_matrix):
+    hmap = sns.heatmap(confusion_matrix, annot=True, fmt="d", cmap="Blues")
+    hmap.yaxis.set_ticklabels(hmap.yaxis.get_ticklabels(), rotation=0, ha="right")
+    hmap.xaxis.set_ticklabels(hmap.xaxis.get_ticklabels(), rotation=30, ha="right")
+    plt.ylabel("True speaker")
+    plt.xlabel("Predicted speaker")
+
+
+cm = confusion_matrix(y_test, y_pred)
+speakers_labels = (
+    df[["speaker", "label"]].groupby(["speaker"]).agg("max").to_dict()["label"]
+)
+df_cm = pd.DataFrame(cm, index=speakers_labels, columns=speakers_labels)
+show_confusion_matrix(df_cm)
+
+
+# run on new pair of texts
+line = "Dwight is my best friend."
+context = "What do you think about Dwight?"
+
+predict_on_text(model, line, context)
+# output 12
+
+speakers_mapping = {y: x for x, y in speakers_labels.items()}
+speakers_mapping[12]
