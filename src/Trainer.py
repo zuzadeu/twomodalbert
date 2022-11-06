@@ -159,4 +159,4 @@ class TwoModalBertTrainer:
                 )
                 best_accuracy = val_acc
 
-            return model, history
+        return model, history

@@ -56,7 +56,7 @@ df["label"] = le.fit_transform(df["speaker"])
 
 
 # train model
-model = Trainer.train_model(
+model, history = Trainer.train_model(
     train_data_loader,
     train,
     val_data_loader,
