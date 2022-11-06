@@ -5,14 +5,15 @@ from sklearn.model_selection import train_test_split
 
 class TwoModalDataPreparation:
     def __init__(
-        self,
-        config,
+        self, config,
     ):
-        self.max_seq_len = int(config['GENERAL']['MAX_SEQ_LEN'])
-        self.batch_size = int(config['GENERAL']['BATCH_SIZE'])
-        self.num_workers = int(config['GENERAL']['NUM_WORKERS'])
-        self.random_seed = int(config['GENERAL']['RANDOM_SEED'])
-        self.pretrained_model_name_or_path = config['GENERAL']['PRETRAINED_MODEL_NAME_OR_PATH']
+        self.max_seq_len = int(config["GENERAL"]["MAX_SEQ_LEN"])
+        self.batch_size = int(config["GENERAL"]["BATCH_SIZE"])
+        self.num_workers = int(config["GENERAL"]["NUM_WORKERS"])
+        self.random_seed = int(config["GENERAL"]["RANDOM_SEED"])
+        self.pretrained_model_name_or_path = config["GENERAL"][
+            "PRETRAINED_MODEL_NAME_OR_PATH"
+        ]
 
     def _create_data_loader(self, df, text_column, context_column, label_column):
 

@@ -9,9 +9,11 @@ import torch
 class TwoModalBertTrainer:
     def __init__(self, device, config):
         self.device = device
-        self.epochs = int(config['GENERAL']['EPOCHS'])
-        self.model_save_path = config['GENERAL']['MODEL_SAVE_PATH'],
-        self.pretrained_model_name_or_path = config['GENERAL']['PRETRAINED_MODEL_NAME_OR_PATH']
+        self.epochs = int(config["GENERAL"]["EPOCHS"])
+        self.model_save_path = config["GENERAL"]["MODEL_SAVE_PATH"]
+        self.pretrained_model_name_or_path = config["GENERAL"][
+            "PRETRAINED_MODEL_NAME_OR_PATH"
+        ]
 
     def _send_to_device(self, d):
         text_input_ids = d["text_input_ids"].to(self.device)
@@ -111,8 +113,8 @@ class TwoModalBertTrainer:
         history = defaultdict(list)
         print(f"LINE SIZE = {text_size}, CONTEXT SIZE = {context_size}")
         model = TwoModalBERTModel(
-            text_hs_size=text_size,
-            context_hs_size=context_size,
+            text_size=text_size,
+            context_size=context_size,
             binary=binary,
             text_p=text_p,
             context_p=context_p,
@@ -157,4 +159,4 @@ class TwoModalBertTrainer:
                 )
                 best_accuracy = val_acc
 
-            return model, history
+        return model, history
