@@ -1,13 +1,17 @@
 from sklearn import preprocessing
-
+from sklearn.metrics import confusion_matrix
 from src.DataPreparation import TwoModalDataPreparation
 from src.Trainer import TwoModalBertTrainer
 import os
 import pandas as pd
 import torch
 
+from src.Model import TwoModalBERTModel
 from configparser import ConfigParser
 from src.Inference import predict_on_text, test_model
+
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # load data
 src_df_path = "/content/drive/MyDrive/TheOffice/The-Office-Lines-V4.csv"
@@ -31,20 +35,6 @@ SELECTED_SPEAKERS = [
 df = df[df["speaker"].isin(SELECTED_SPEAKERS)]
 le = preprocessing.LabelEncoder()
 df["label"] = le.fit_transform(df["speaker"])
-
-
-# Read config.ini file
-config = ConfigParser()
-config.read("config.ini")
-
-
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-
-# intialize modules
-DataPreparation = TwoModalDataPreparation(config=config)
-Trainer = TwoModalBertTrainer(device=DEVICE, config=config)
 
 
 # create data loaders

@@ -6,8 +6,8 @@ import torch
 class TwoModalBERTModel(nn.Module):
     def __init__(
         self,
-        text_hs_size,
-        context_hs_size,
+        text_size,
+        context_size,
         binary=False,
         text_p=0.3,
         context_p=0.3,
@@ -15,8 +15,8 @@ class TwoModalBERTModel(nn.Module):
         pretrained_model_name_or_path="bert-base-uncased",
     ):
         super(TwoModalBERTModel, self).__init__()
-        self.text_hs_size = text_hs_size
-        self.context_hs_size = context_hs_size
+        self.text_hs_size = text_size
+        self.context_hs_size = context_size
         self.model = BertForSequenceClassification.from_pretrained(
             pretrained_model_name_or_path, output_hidden_states=True
         )

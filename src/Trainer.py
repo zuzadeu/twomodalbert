@@ -113,8 +113,8 @@ class TwoModalBertTrainer:
         history = defaultdict(list)
         print(f"LINE SIZE = {text_size}, CONTEXT SIZE = {context_size}")
         model = TwoModalBERTModel(
-            text_hs_size=text_size,
-            context_hs_size=context_size,
+            text_size=text_size,
+            context_size=context_size,
             binary=binary,
             text_p=text_p,
             context_p=context_p,
