@@ -10,7 +10,7 @@ class TwoModalBertTrainer:
     def __init__(self, device, config):
         self.device = device
         self.epochs = int(config["GENERAL"]["EPOCHS"])
-        self.model_save_path = (config["GENERAL"]["MODEL_SAVE_PATH"],)
+        self.model_save_path = config["GENERAL"]["MODEL_SAVE_PATH"]
         self.pretrained_model_name_or_path = config["GENERAL"][
             "PRETRAINED_MODEL_NAME_OR_PATH"
         ]
