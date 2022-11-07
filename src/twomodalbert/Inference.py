@@ -1,4 +1,5 @@
 from configparser import ConfigParser
+import torch
 
 config = ConfigParser()
 config.read("config.ini")

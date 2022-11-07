@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "twomodalbert"
+version = "0.0.1"
+authors = [
+  { name="Zuzanna Deutschman", email="zuza.deu@gmail.com" },
+]
+description = "A package to build neural networks based on two separate text fields."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/zuzadeu/twomodalbert"
+"Bug Tracker" = "https://github.com/zuzadeu/twomodalbert/issues"
