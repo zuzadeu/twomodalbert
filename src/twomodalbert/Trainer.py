@@ -1,7 +1,7 @@
 from collections import defaultdict
 from torch import nn
 from transformers import AdamW
-from src.Model import TwoModalBERTModel
+from twomodalbert.Model import TwoModalBERTModel
 import numpy as np
 import torch
 

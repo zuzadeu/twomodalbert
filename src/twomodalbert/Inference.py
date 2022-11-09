@@ -1,10 +1,12 @@
 from configparser import ConfigParser
+from transformers import BertTokenizer
+import torch
 
 config = ConfigParser()
 config.read("config.ini")
+device = F
 
-
-def test_model(model, data_loader):
+def test_model(model, data_loader, device):
     model = model.eval()
 
     predictions = []
@@ -33,7 +35,8 @@ def test_model(model, data_loader):
     return predictions, real_values
 
 
-def tokenize(text):
+def tokenize(text, device):
+    tokenizer = BertTokenizer.from_pretrained(config["GENERAL"]["PRETRAINED_MODEL_NAME_OR_PATH"])
     encoding = tokenizer.encode_plus(
         text=text,  # emails to encode.
         add_special_tokens=True,  # Add '[CLS]' and '[SEP]'
@@ -50,8 +53,8 @@ def tokenize(text):
     return input_ids, attention_masks
 
 
-def predict_on_text(model, text, context):
-    input_ids_text, attention_masks_text = tokenize(text)
+def predict_on_text(model, text, context, device):
+    input_ids_text, attention_masks_text = tokenize(text, device)
     input_ids_context, attention_masks_context = tokenize(context)
 
     outputs = model(
