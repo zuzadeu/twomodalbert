@@ -1,4 +1,6 @@
-![](C:\Users\zuzan\AppData\Roaming\marktext\images\2022-11-09-19-01-23-image.png)
+
+
+![Alt text](images\2022-11-09-19-01-23-image.png)
 
 *Create a neural network with two text modes of tunable weights*
 
@@ -79,9 +81,8 @@ config.read("config.ini")
    ```
 
 3. Train the model (nn parameters described in this section)
-   ```
    
-   ```python
+   ```
    model, history = Trainer.train_model(
        train_data_loader,
        train,
@@ -96,12 +97,12 @@ config.read("config.ini")
    
    )
    ```
-   
-   
 
 ## Predict
 
 # Neural network architecture
+
+![2022-11-01-17-55-38-image.png](images\2022-11-01-17-55-38-image.png)
 
 # Parameters in `config.ini`
 
