@@ -102,7 +102,7 @@ config.read("config.ini")
 
 # Neural network architecture
 
-![2022-11-01-17-55-38-image.png](images\2022-11-01-17-55-38-image.png)
+![Alt text](https://github.com/zuzadeu/twomodalbert/blob/develop/images/2022-11-01-17-55-38-image.png)
 
 # Parameters in `config.ini`
 
