@@ -1,6 +1,6 @@
 
 
-![Alt text](images\2022-11-09-19-01-23-image.png)
+![Alt text](https://github.com/zuzadeu/twomodalbert/blob/develop/images/2022-11-09-19-01-23-image.png)
 
 *Create a neural network with two text modes of tunable weights*
 
