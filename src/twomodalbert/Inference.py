@@ -4,7 +4,7 @@ import torch
 
 config = ConfigParser()
 config.read("config.ini")
-device = F
+
 
 def test_model(model, data_loader, device):
     model = model.eval()
