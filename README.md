@@ -1,6 +1,6 @@
 ![Alt text](https://github.com/zuzadeu/twomodalbert/blob/develop/images/2022-11-09-19-01-23-image.png)
 
-*Create a neural network with two text modes of tunable weights*
+*Fine-tune a neural network with two text modes of tunable weights*
 
 `pip install twomodalbert`
 
@@ -119,7 +119,7 @@ The TwoModalBERT package allows us to quickly run an experiment with the two-mod
    y_pred, y_test = test_model(model, test_data_loader, DEVICE)
    ```
 
-3. Run the model on a two text inputs
+3. Run the model on two text inputs
    
    ```python
    text = "Its website is just incredible!"
@@ -131,11 +131,21 @@ The TwoModalBERT package allows us to quickly run an experiment with the two-mod
 
 # Neural network architecture
 
+Below you can find how TwoModalBERT is constructed and what are the class parameters.
+
 ![Alt text](https://github.com/zuzadeu/twomodalbert/blob/develop/images/2022-11-01-17-55-38-image.png)
+
+First of all, on top of the last BERT layer, a linear layer is added. To be precise, it is added on top of the CLS token. As the CLS token aggregates the entire sequence representation, it is often used in a classification task.
+
+The linear layer transforms input features with hidden size relevant to the BERT model, which is usually 768 for the models available in the *transformers* package, into features with hidden size equal to predefined `context_size` and `text_size`.
+
+In the next step, the dropout layers with probabilities `context_p` and `text_p` are added on the top. Why? Because it makes the neural network less sensitive to the specific weights of neurons and not prone to overfitting.
+
+Finally, both branches created similarly are combined and followed by another dropout layer of `output_p` and an activation function (Sigmoid if `binary`, else Softmax). 
 
 # Parameters in `config.ini`
 
-Settings to be defined in `config.ini` file:
+Settings to be defined in the  `config.ini` file:
 
 | Variable                      | Description                                                                                        | Default Value     |
 | ----------------------------- | -------------------------------------------------------------------------------------------------- | ----------------- |
@@ -149,18 +159,10 @@ Settings to be defined in `config.ini` file:
 
 # Requirenments
 
-- `configparser`
+- `configparser-5.3.0`
 
-- `sklearn`
+- `scikit-learn-1.0.2`
 
-- `torch`
+- `torch-1.12.1+cu113`
 
-- `transformers`
-
-- 
-
-- 
-
-- 
-
-
+- `transformers-4.24.0`
