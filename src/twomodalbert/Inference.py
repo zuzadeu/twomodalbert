@@ -55,7 +55,7 @@ def tokenize(text, device):
 
 def predict_on_text(model, text, context, device):
     input_ids_text, attention_masks_text = tokenize(text, device)
-    input_ids_context, attention_masks_context = tokenize(context)
+    input_ids_context, attention_masks_context = tokenize(context, device)
 
     outputs = model(
         input_ids_text, attention_masks_text, input_ids_context, attention_masks_context

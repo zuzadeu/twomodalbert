@@ -152,7 +152,7 @@ Settings to be defined in the  `config.ini` file:
 | EPOCHS                        | the number of complete passes through the training dataset                                         | 3                 |
 | RANDOM_SEED                   | a number used to initialize a pseudorandom number generator                                        | 42                |
 | BARCH_SIZE                    | the number of training samples to work through before the model’s internal parameters are updated  | 16                |
-| MAX_SEQ_LEN                   | the maximum length in number of tokens for the inputs to the transformer model                     | 200               |
+| MAX_SEQ_LEN                   | the maximum length in number of tokens for the inputs to the transformer model                     | 100               |
 | NUM_WORKERS                   | the number of processes that generate batches in parallel                                          | 2                 |
 | PRETRAINED_MODEL_NAME_OR_PATH | of a pre-trained model configuration to load from cache or download (equivalent to `transformers`) | bert-base-uncased |
 | MODEL_SAVE_PATH               | the model save path                                                                                | best_model.bin    |
