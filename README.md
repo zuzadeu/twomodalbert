@@ -1,6 +1,6 @@
 ![Alt text](https://github.com/zuzadeu/twomodalbert/blob/develop/images/2022-11-09-19-01-23-image.png)
 
-*Fine-tune a neural network with two text modes of tunable weights*
+*Create a neural network with two text modes of tunable weights*
 
 `pip install twomodalbert`
 
@@ -123,13 +123,11 @@ The TwoModalBERT package allows us to quickly run an experiment with the two-mod
    
    ```python
    text = "Its website is just incredible!"
-   
    context = "This product is horrible, which I didn't expect."
-   
    predict_on_text(model, text, context, DEVICE)
    ```
 
-# Neural network architecture
+## Neural network architecture
 
 Below you can find how TwoModalBERT is constructed and what are the class parameters.
 
@@ -143,7 +141,7 @@ In the next step, the dropout layers with probabilities `context_p` and `text_p`
 
 Finally, both branches created similarly are combined and followed by another dropout layer of `output_p` and an activation function (Sigmoid if `binary`, else Softmax). 
 
-# Parameters in `config.ini`
+## Parameters in `config.ini`
 
 Settings to be defined in the  `config.ini` file:
 
@@ -157,7 +155,7 @@ Settings to be defined in the  `config.ini` file:
 | PRETRAINED_MODEL_NAME_OR_PATH | of a pre-trained model configuration to load from cache or download (equivalent to `transformers`) | bert-base-uncased |
 | MODEL_SAVE_PATH               | the model save path                                                                                | best_model.bin    |
 
-# Requirenments
+## Requirenments
 
 - `configparser-5.3.0`
 
@@ -166,3 +164,9 @@ Settings to be defined in the  `config.ini` file:
 - `torch-1.12.1+cu113`
 
 - `transformers-4.24.0`
+
+
+
+## Blog
+
+[Link to the blog post](https://medium.com/@zuzannadeutschman/predict-the-office-character-with-twomodalbert-44e575262c7d)
